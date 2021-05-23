@@ -1,0 +1,62 @@
+﻿<Window x:Class="LanguageProg.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LanguageProg"
+        mc:Ignorable="d"
+        Icon="../Resources/school_logo.ico"
+        Title="AdminWindow" Height="450" Width="900" MinHeight="450" MinWidth="810">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*" MinHeight="90"/>
+            <RowDefinition Height="0.1*" MinHeight="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.1*" MinHeight="70"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Image Source="../Resources/school_logo.png" Margin="10 0 0 0 "/>
+            <TextBlock Text="Школа языков &quot;Language&quot;" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+            <Label Content="Количество записей на странице:" Margin="10" />
+            <ComboBox Name="CountOfRecordsComboBox" Height="25" SelectionChanged="SelectionChangedCountOfRecordsComboBox" Margin="10"/>
+            <Label Content="Пол:" Margin="10" />
+            <ComboBox Name="GenderFilterComboBox" Height="20" SelectionChanged="SelectionChangedGenderFilterComboBox" Margin="10"/>
+            <Label Content="Сортировка:" Margin="10" />
+            <ComboBox Name="SortingComboBox" Height="25" SelectionChanged="SortingComboBox_SelectionChanged" Margin="10"/>
+            <CheckBox Content="День рождения в этом месяце" x:Name="BirthDayCheckBox" Checked="BirthDayCheckBox_Changed" Unchecked="BirthDayCheckBox_Changed" VerticalAlignment="Center"/>
+        </StackPanel>
+        <ListView x:Name="AdminListView" Grid.Row="2" Background="#e7fabf">
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyle}">
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>
+                    <GridViewColumn Header="Пол" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Patronymic}"/>
+                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding DateOfBirth}"/>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding PhoneNumber}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding DateOfRegistration}"/>
+                    <GridViewColumn Header="Дата последнего посещения" DisplayMemberBinding="{Binding LastEntry}"/>
+                    <GridViewColumn Header="Количество посещений" DisplayMemberBinding="{Binding count}"/>
+                    <GridViewColumn Header="Список тегов" DisplayMemberBinding="{Binding Tags}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+            <Label Content="Кол-во записей: " Margin="10"/>
+            <Label Content="0 из 0" Margin="10" x:Name="CountOfRecordsLable"/>
+            <Button Content="предыдущую" Name="PrevButton" Margin="10" Click="PrevButton_Click"/>
+            <Button Content="следующую" Name="NextButoon" Margin="10" Click="NextButton_Click"/>
+            <Label Content="Поиск: " Margin="10" />
+            <TextBox x:Name="SearchTextBox" Height="20" Width="100" TextChanged="SearchTextBox_TextChanged"/>
+            <Button x:Name="DelButton" Content="Удалить" Click="DelButton_Click" Margin="10"/>
+            
+        </StackPanel>
+    </Grid>
+</Window>
