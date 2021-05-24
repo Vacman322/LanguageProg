@@ -167,7 +167,10 @@ namespace LanguageProg
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             if (AdminListView.SelectedItem is null)
+            {
+                MessageBox.Show("Выберите запись для удаления");
                 return;
+            }
 
             var selected = (ClientsList)AdminListView.SelectedItem;
             if (selected.count > 0)
@@ -188,6 +191,25 @@ namespace LanguageProg
             var selctedClient = DB.Context.Client.Where(r => r.ID == selected.ID).FirstOrDefault();
             DB.Context.Client.Remove(selctedClient);
             DB.Context.SaveChanges();
+            UpdateList();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            new AddEditWindow().ShowDialog();
+            UpdateList();
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AdminListView.SelectedItem is null)
+            {
+                MessageBox.Show("Выберите запись для редактирования");
+                return;
+            }
+
+            var selected = (ClientsList)AdminListView.SelectedItem;
+            new AddEditWindow(selected.ID).ShowDialog();
             UpdateList();
         }
     }

@@ -56,7 +56,8 @@
             <Label Content="Поиск: " Margin="10" />
             <TextBox x:Name="SearchTextBox" Height="20" Width="100" TextChanged="SearchTextBox_TextChanged"/>
             <Button x:Name="DelButton" Content="Удалить" Click="DelButton_Click" Margin="10"/>
-            
+            <Button x:Name="AddButton" Content="Добавить" Click="AddButton_Click" Margin="10"/>
+            <Button x:Name="EditButton" Content="Изменить" Click="EditButton_Click" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -117,6 +117,9 @@
     <Compile Include="EF\TagClient.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AddEditWindow.xaml.cs">
+      <DependentUpon>AddEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\AddEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -182,6 +189,107 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Clients\1.jpg" />
+    <Resource Include="Resources\Clients\10.jpg" />
+    <Resource Include="Resources\Clients\11.jpg" />
+    <Resource Include="Resources\Clients\12.jpg" />
+    <Resource Include="Resources\Clients\13.jpg" />
+    <Resource Include="Resources\Clients\14.jpg" />
+    <Resource Include="Resources\Clients\15.jpg" />
+    <Resource Include="Resources\Clients\16.jpg" />
+    <Resource Include="Resources\Clients\17.jpg" />
+    <Resource Include="Resources\Clients\18.jpg" />
+    <Resource Include="Resources\Clients\19.jpg" />
+    <Resource Include="Resources\Clients\2.jpg" />
+    <Resource Include="Resources\Clients\20.jpg" />
+    <Resource Include="Resources\Clients\21.jpg" />
+    <Resource Include="Resources\Clients\22.jpg" />
+    <Resource Include="Resources\Clients\23.jpg" />
+    <Resource Include="Resources\Clients\24.jpg" />
+    <Resource Include="Resources\Clients\25.jpg" />
+    <Resource Include="Resources\Clients\26.jpg" />
+    <Resource Include="Resources\Clients\27.jpg" />
+    <Resource Include="Resources\Clients\28.jpg" />
+    <Resource Include="Resources\Clients\29.jpg" />
+    <Resource Include="Resources\Clients\3.jpg" />
+    <Resource Include="Resources\Clients\30.jpg" />
+    <Resource Include="Resources\Clients\31.jpg" />
+    <Resource Include="Resources\Clients\32.jpg" />
+    <Resource Include="Resources\Clients\33.jpg" />
+    <Resource Include="Resources\Clients\34.jpg" />
+    <Resource Include="Resources\Clients\35.jpg" />
+    <Resource Include="Resources\Clients\36.jpg" />
+    <Resource Include="Resources\Clients\37.jpg" />
+    <Resource Include="Resources\Clients\38.jpg" />
+    <Resource Include="Resources\Clients\39.jpg" />
+    <Resource Include="Resources\Clients\4.jpg" />
+    <Resource Include="Resources\Clients\40.jpg" />
+    <Resource Include="Resources\Clients\41.jpg" />
+    <Resource Include="Resources\Clients\42.jpg" />
+    <Resource Include="Resources\Clients\43.jpg" />
+    <Resource Include="Resources\Clients\44.jpg" />
+    <Resource Include="Resources\Clients\47.jpg" />
+    <Resource Include="Resources\Clients\48.jpg" />
+    <Resource Include="Resources\Clients\5.jpg" />
+    <Resource Include="Resources\Clients\6.jpg" />
+    <Resource Include="Resources\Clients\7.jpg" />
+    <Resource Include="Resources\Clients\8.jpg" />
+    <Resource Include="Resources\Clients\9.jpg" />
+    <Resource Include="Resources\Clients\m1.jpg" />
+    <Resource Include="Resources\Clients\m10.jpg" />
+    <Resource Include="Resources\Clients\m11.jpg" />
+    <Resource Include="Resources\Clients\m12.jpg" />
+    <Resource Include="Resources\Clients\m13.jpg" />
+    <Resource Include="Resources\Clients\m14.jpg" />
+    <Resource Include="Resources\Clients\m15.jpg" />
+    <Resource Include="Resources\Clients\m16.jpg" />
+    <Resource Include="Resources\Clients\m17.jpg" />
+    <Resource Include="Resources\Clients\m18.jpg" />
+    <Resource Include="Resources\Clients\m19.jpg" />
+    <Resource Include="Resources\Clients\m2.jpg" />
+    <Resource Include="Resources\Clients\m20.jpg" />
+    <Resource Include="Resources\Clients\m21.jpg" />
+    <Resource Include="Resources\Clients\m22.jpg" />
+    <Resource Include="Resources\Clients\m23.jpg" />
+    <Resource Include="Resources\Clients\m24.jpg" />
+    <Resource Include="Resources\Clients\m25.jpg" />
+    <Resource Include="Resources\Clients\m26.jpg" />
+    <Resource Include="Resources\Clients\m27.jpg" />
+    <Resource Include="Resources\Clients\m28.jpg" />
+    <Resource Include="Resources\Clients\m29.jpg" />
+    <Resource Include="Resources\Clients\m3.jpg" />
+    <Resource Include="Resources\Clients\m30.jpg" />
+    <Resource Include="Resources\Clients\m31.jpg" />
+    <Resource Include="Resources\Clients\m32.jpg" />
+    <Resource Include="Resources\Clients\m33.jpg" />
+    <Resource Include="Resources\Clients\m34.jpg" />
+    <Resource Include="Resources\Clients\m35.jpg" />
+    <Resource Include="Resources\Clients\m36.jpg" />
+    <Resource Include="Resources\Clients\m37.jpg" />
+    <Resource Include="Resources\Clients\m38.jpg" />
+    <Resource Include="Resources\Clients\m39.jpg" />
+    <Resource Include="Resources\Clients\m4.jpg" />
+    <Resource Include="Resources\Clients\m40.jpg" />
+    <Resource Include="Resources\Clients\m41.jpg" />
+    <Resource Include="Resources\Clients\m42.jpg" />
+    <Resource Include="Resources\Clients\m43.jpg" />
+    <Resource Include="Resources\Clients\m44.jpg" />
+    <Resource Include="Resources\Clients\m45.jpg" />
+    <Resource Include="Resources\Clients\m46.jpg" />
+    <Resource Include="Resources\Clients\m47.jpg" />
+    <Resource Include="Resources\Clients\m48.jpg" />
+    <Resource Include="Resources\Clients\m49.jpg" />
+    <Resource Include="Resources\Clients\m5.jpg" />
+    <Resource Include="Resources\Clients\m50.jpg" />
+    <Resource Include="Resources\Clients\m6.jpg" />
+    <Resource Include="Resources\Clients\m7.jpg" />
+    <Resource Include="Resources\Clients\m8.jpg" />
+    <Resource Include="Resources\Clients\m9.jpg" />
+    <Resource Include="Resources\Clients\m96.jpg" />
+    <Resource Include="Resources\Clients\m97.jpg" />
+    <Resource Include="Resources\Clients\m98.jpg" />
+    <Resource Include="Resources\Clients\m99.jpg" />
+    <Resource Include="Resources\Default_ClientImg.png" />
     <Resource Include="Resources\school_logo.ico" />
     <Resource Include="Resources\school_logo.png" />
   </ItemGroup>
