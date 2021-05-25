@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,6 +24,8 @@ namespace LanguageProg
     {
         Client client;
         bool isEdit = true;
+        bool isPhotoEdit = false;
+        string photoName;
         public AddEditWindow(int ClientId = -1)
         {
             InitializeComponent();
@@ -52,7 +55,55 @@ namespace LanguageProg
                 IdLabel.Visibility = Visibility.Hidden;
                 IdTextBox.Visibility = Visibility.Hidden;
             }
+
+            var tags = DB.Context.Tag;
+            var id = client.ID;
+            var clientsTags = DB.Context.TagClient
+                        .Where(r => r.IDClient == id)
+                        .Select(r => r.IDTag)
+                        .ToList();
+
+            foreach (var tag in tags)
+            {
+                var cb = new CheckBox()
+                {
+                    Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#" + tag.Color)),
+                    Content = tag.Name               
+                };
+
+                
+                TagsWrapPanel.Children.Add(cb);
+                if (isEdit)
+                {
+
+                    if (clientsTags.Contains(tag.ID))
+                    {
+                        cb.IsChecked = true;
+                    }
+                }
+                cb.Checked += Cb_Checked;
+                cb.Unchecked += Cb_Unchecked;
+            }
         }
+
+        private void Cb_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            string tagName = checkBox.Content.ToString();
+            var tagId = DB.Context.Tag.FirstOrDefault(r => r.Name.Equals(tagName)).ID;
+            var tagForDel = DB.Context.TagClient.FirstOrDefault(r => r.IDClient == client.ID && r.IDTag == tagId);
+            DB.Context.TagClient.Remove(tagForDel);
+        }
+
+        private void Cb_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            string tagName = checkBox.Content.ToString();
+            var tagId = DB.Context.Tag.FirstOrDefault(r => r.Name.Equals(tagName)).ID;
+            var tagClient = new TagClient() { IDClient = client.ID, IDTag = tagId };
+            DB.Context.TagClient.Add(tagClient);
+        }
+
         public bool IsValidEmail(string emailaddress)
         {
             try
@@ -129,10 +180,13 @@ namespace LanguageProg
             client.PhoneNumber = PhoneTextBox.Text;
             client.DateOfBirth = BirthDayDatePicker.DisplayDate;
             client.IDGender = (string)GenderComboBox.SelectedItem;
+            if(isPhotoEdit)
+            {
+                client.Photo = "Clients\\" + photoName;
+            }
 
             if(isEdit)
             {
-                DB.Context.Entry(client).State = System.Data.Entity.EntityState.Modified;
                 DB.Context.SaveChanges();
             }
             else
@@ -152,16 +206,30 @@ namespace LanguageProg
             bool? result = fileDialog.ShowDialog();
             if(result.HasValue && result.Value)
             {
-                var fileInfo = new System.IO.FileInfo(fileDialog.FileName);
+                var fileInfo = new FileInfo(fileDialog.FileName);
                 if(fileInfo.Length > 2 * 1024 * 1024)
                 {
                     MessageBox.Show("Размер фотографии не должен превышать 2 мегабайта.");
                     return;
                 }
-                
                 ClientImage.Source = new BitmapImage(new Uri(fileDialog.FileName));
-                //фото не сохраняется
+
+                DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory + "\\Clients");
+                if (!dirInfo.Exists)
+                {
+                    dirInfo.Create();
+                }
+
+                var a = Environment.CurrentDirectory;
+                fileInfo.CopyTo(Environment.CurrentDirectory + "\\Clients\\" + fileInfo.Name, true);
+                isPhotoEdit = true;
+                photoName = fileInfo.Name;
             }
+        }
+
+        private void VisitsButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ClientVisitsWindow(client.ID).ShowDialog();
         }
     }
 }

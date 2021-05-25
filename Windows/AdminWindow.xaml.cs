@@ -57,6 +57,7 @@ namespace LanguageProg
 
         private void UpdateList(bool updateNumberPage = false)
         {
+            DB.Context = new Context();
             if (updateNumberPage)
                 numberPage = 0;
 

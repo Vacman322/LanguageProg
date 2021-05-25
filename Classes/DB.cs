@@ -9,6 +9,6 @@ namespace LanguageProg
 {
     public class DB
     {
-        public readonly static Context Context = new Context();
+        public static Context Context = new Context();
     }
 }
