@@ -45,7 +45,8 @@ namespace LanguageProg
                 GenderComboBox.SelectedItem = client.IDGender;
                 if (!(client.Photo is null))
                 {
-                    ClientImage.Source = new BitmapImage(new Uri("../Resources/" + client.Photo, UriKind.Relative));
+                    var a = new Uri(FindDirectoryForSave() + "\\" + client.Photo);
+                    ClientImage.Source = new BitmapImage(a);
                 }
             }
             else
@@ -116,6 +117,11 @@ namespace LanguageProg
                 return false;
             }
         }
+        private bool WarningWindowCall(string msg, string caption)
+        {
+            var mboxResult = MessageBox.Show(msg, caption, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            return mboxResult == MessageBoxResult.Yes;
+        }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -173,6 +179,9 @@ namespace LanguageProg
                 return;
             }
 
+            if (!WarningWindowCall("Вы точно хотите сохранить?", "Сохранение"))
+                return;
+
             client.LastName = LastNameTextBox.Text;
             client.FirstName = FirstNameTextBox.Text;
             client.Patronymic = PatronymicTextBox.Text;
@@ -198,10 +207,21 @@ namespace LanguageProg
             Close();
         }
 
+        private string FindDirectoryForSave()
+        {
+            var currentDir = new DirectoryInfo(Environment.CurrentDirectory);
+            var resDir = currentDir.Parent.Parent.GetDirectories()
+                .FirstOrDefault(d => d.Name.Equals("Resources"));
+            if (resDir is null)
+                return Environment.CurrentDirectory;
+
+            return resDir.FullName;
+        }
+
         private void СhangeImgButoon_Click(object sender, RoutedEventArgs e)
         {
             var fileDialog = new Microsoft.Win32.OpenFileDialog();
-            fileDialog.Filter = "Bitmap files (*.bmp)|*.bmp|Image files (*.jpg)|*.jpg";
+            fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
 
             bool? result = fileDialog.ShowDialog();
             if(result.HasValue && result.Value)
@@ -213,15 +233,9 @@ namespace LanguageProg
                     return;
                 }
                 ClientImage.Source = new BitmapImage(new Uri(fileDialog.FileName));
+                
 
-                DirectoryInfo dirInfo = new DirectoryInfo(Environment.CurrentDirectory + "\\Clients");
-                if (!dirInfo.Exists)
-                {
-                    dirInfo.Create();
-                }
-
-                var a = Environment.CurrentDirectory;
-                fileInfo.CopyTo(Environment.CurrentDirectory + "\\Clients\\" + fileInfo.Name, true);
+                fileInfo.CopyTo(FindDirectoryForSave() + "\\Clients\\" + fileInfo.Name, true);
                 isPhotoEdit = true;
                 photoName = fileInfo.Name;
             }

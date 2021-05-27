@@ -21,6 +21,8 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+            <Label Content="Поиск: " Margin="10" />
+            <TextBox x:Name="SearchTextBox" Height="20" Width="100" TextChanged="SearchTextBox_TextChanged"/>
             <Label Content="Количество записей на странице:" Margin="10" />
             <ComboBox Name="CountOfRecordsComboBox" Height="25" SelectionChanged="SelectionChangedCountOfRecordsComboBox" Margin="10"/>
             <Label Content="Пол:" Margin="10" />
@@ -29,7 +31,7 @@
             <ComboBox Name="SortingComboBox" Height="25" SelectionChanged="SortingComboBox_SelectionChanged" Margin="10"/>
             <CheckBox Content="День рождения в этом месяце" x:Name="BirthDayCheckBox" Checked="BirthDayCheckBox_Changed" Unchecked="BirthDayCheckBox_Changed" VerticalAlignment="Center"/>
         </StackPanel>
-        <ListView x:Name="AdminListView" Grid.Row="2" Background="#e7fabf">
+        <ListView x:Name="AdminListView" Grid.Row="2" Background="#e7fabf" SelectionChanged="AdminListView_SelectionChanged">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyle}">
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}"/>
@@ -37,13 +39,13 @@
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}"/>
                     <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}"/>
                     <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Patronymic}"/>
-                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding DateOfBirth}"/>
+                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding DateOfBirth, StringFormat=&quot;yyyy.MM.dd&quot;}"/>
                     <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding PhoneNumber}"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
-                    <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding DateOfRegistration}"/>
-                    <GridViewColumn Header="Дата последнего посещения" DisplayMemberBinding="{Binding LastEntry}"/>
+                    <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding DateOfRegistration, StringFormat=&quot;yyyy.MM.dd&quot;}"/>
+                    <GridViewColumn Header="Дата последнего посещения" DisplayMemberBinding="{Binding LastEntry, StringFormat=&quot;yyyy.MM.dd hh:mm:ss&quot;}"/>
                     <GridViewColumn Header="Количество посещений" DisplayMemberBinding="{Binding count}"/>
-                    <GridViewColumn Header="Список тегов" DisplayMemberBinding="{Binding Tags}"/>
+                    <GridViewColumn Header="Список тегов" DisplayMemberBinding="{Binding Tags}" x:Name="TagsGridViewColumn"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -53,11 +55,12 @@
             <Label Content="0 из 0" Margin="10" x:Name="CountOfRecordsLable"/>
             <Button Content="предыдущую" Name="PrevButton" Margin="10" Click="PrevButton_Click"/>
             <Button Content="следующую" Name="NextButoon" Margin="10" Click="NextButton_Click"/>
-            <Label Content="Поиск: " Margin="10" />
-            <TextBox x:Name="SearchTextBox" Height="20" Width="100" TextChanged="SearchTextBox_TextChanged"/>
             <Button x:Name="DelButton" Content="Удалить" Click="DelButton_Click" Margin="10"/>
             <Button x:Name="AddButton" Content="Добавить" Click="AddButton_Click" Margin="10"/>
             <Button x:Name="EditButton" Content="Изменить" Click="EditButton_Click" Margin="10"/>
+            <WrapPanel x:Name="TagsWrapPanel">
+                
+            </WrapPanel>
         </StackPanel>
     </Grid>
 </Window>

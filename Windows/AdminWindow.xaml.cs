@@ -75,14 +75,14 @@ namespace LanguageProg
                     .OrderBy(r => r.ID)
                     .ToList();
             }
-            if(BirthDayCheckBox.IsChecked.HasValue && BirthDayCheckBox.IsChecked.Value)
+            if (BirthDayCheckBox.IsChecked.HasValue && BirthDayCheckBox.IsChecked.Value)
             {
                 clients = clients
                     .Where(r => r.DateOfBirth.Month == DateTime.Now.Month)
                     .ToList();
             }
 
-            if(!string.IsNullOrEmpty(SearchTextBox.Text))
+            if (!string.IsNullOrEmpty(SearchTextBox.Text))
             {
                 var str = SearchTextBox.Text;
                 clients = clients
@@ -109,7 +109,7 @@ namespace LanguageProg
                     .ToList();
             }
 
-            CountOfRecordsLable.Content = $"{clients.Count} из {DB.Context.ClientsList.Count()}";
+            CountOfRecordsLable.Content = $"{clients.Count} из {maxRecordsCount}";
             AdminListView.ItemsSource = clients;
         }
 
@@ -165,6 +165,12 @@ namespace LanguageProg
             UpdateList(true);
         }
 
+        private bool WarningWindowCall(string msg, string caption)
+        {
+            var mboxResult = MessageBox.Show(msg, caption, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            return mboxResult == MessageBoxResult.Yes;
+        }
+
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             if (AdminListView.SelectedItem is null)
@@ -180,7 +186,10 @@ namespace LanguageProg
                 return;
             }
 
-            if(!string.IsNullOrEmpty(selected.Tags))
+            if (!WarningWindowCall("Вы точно хотите удалить запись?", "Удаление"))
+                return;
+
+            if (!string.IsNullOrEmpty(selected.Tags))
             {
                 var TagClients = DB.Context.TagClient.Where(r => r.IDClient == selected.ID).ToList();
                 foreach (var tagClient in TagClients)
@@ -212,6 +221,35 @@ namespace LanguageProg
             var selected = (ClientsList)AdminListView.SelectedItem;
             new AddEditWindow(selected.ID).ShowDialog();
             UpdateList();
+        }
+
+        private void AdminListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TagsWrapPanel.Children.Clear();
+            var selected = (ClientsList)AdminListView.SelectedItem;
+            if (selected != null && !string.IsNullOrWhiteSpace(selected.Tags))
+            {
+                var id = selected.ID;
+                var clientsTags = DB.Context.TagClient
+                            .Where(r => r.IDClient == id)
+                            .Select(r => r.Tag)
+                            .ToList();
+                foreach (var tag in clientsTags)
+                {
+                    var color = (Color)ColorConverter.ConvertFromString("#" + tag.Color);
+                    var textBlock = new TextBlock()
+                    {
+                        Text = tag.Name,
+                        Margin = new Thickness(2),
+                        Padding = new Thickness(2),
+                        Background = new SolidColorBrush(color),
+                        Height = 25,
+                        Foreground = (color.R + color.G + color.B) / 3 < 127 ? Brushes.White : Brushes.Black 
+                    };
+
+                    TagsWrapPanel.Children.Add(textBlock);
+                }
+            }
         }
     }
 }

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LanguageProg"
         mc:Ignorable="d"
-        Title="CustomerVisitsWindow" Height="450" Width="300"
+        Icon="../Resources/school_logo.ico"
+        Title="Посещения" Height="450" Width="300"
         MinHeight="200" MinWidth="200">
     <Grid>
         <ScrollViewer>
