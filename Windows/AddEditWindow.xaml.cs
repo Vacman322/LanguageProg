@@ -93,7 +93,9 @@ namespace LanguageProg
             string tagName = checkBox.Content.ToString();
             var tagId = DB.Context.Tag.FirstOrDefault(r => r.Name.Equals(tagName)).ID;
             var tagForDel = DB.Context.TagClient.FirstOrDefault(r => r.IDClient == client.ID && r.IDTag == tagId);
-            DB.Context.TagClient.Remove(tagForDel);
+            if(tagForDel is null)
+                tagForDel = DB.Context.TagClient.Local.FirstOrDefault(r => r.IDClient == client.ID && r.IDTag == tagId);
+            DB.Context.TagClient.Local.Remove(tagForDel);
         }
 
         private void Cb_Checked(object sender, RoutedEventArgs e)
@@ -103,6 +105,8 @@ namespace LanguageProg
             var tagId = DB.Context.Tag.FirstOrDefault(r => r.Name.Equals(tagName)).ID;
             var tagClient = new TagClient() { IDClient = client.ID, IDTag = tagId };
             DB.Context.TagClient.Add(tagClient);
+            var b = DB.Context.TagClient.Local.ToList();
+
         }
 
         public bool IsValidEmail(string emailaddress)
@@ -173,7 +177,7 @@ namespace LanguageProg
                 '+', '-', '(', ')', ' '
             };
 
-            if (!PhoneTextBox.Text.Select(s => char.IsDigit(s) || validPhoneSybls.Contains(s)).Aggregate((b1, b2) => b1 && b2))
+            if (!PhoneTextBox.Text.Trim().Select(s => char.IsDigit(s) || validPhoneSybls.Contains(s)).Aggregate((b1, b2) => b1 && b2))
             {
                 MessageBox.Show("телефона может содержать только цифры и следующие символы: плюс, минус, открывающая и закрывающая круглые скобки, знак пробела");
                 return;
@@ -182,11 +186,11 @@ namespace LanguageProg
             if (!WarningWindowCall("Вы точно хотите сохранить?", "Сохранение"))
                 return;
 
-            client.LastName = LastNameTextBox.Text;
-            client.FirstName = FirstNameTextBox.Text;
-            client.Patronymic = PatronymicTextBox.Text;
-            client.Email = EmailTextBox.Text;
-            client.PhoneNumber = PhoneTextBox.Text;
+            client.LastName = LastNameTextBox.Text.Trim();
+            client.FirstName = FirstNameTextBox.Text.Trim();
+            client.Patronymic = PatronymicTextBox.Text.Trim();
+            client.Email = EmailTextBox.Text.Trim();
+            client.PhoneNumber = PhoneTextBox.Text.Trim();
             client.DateOfBirth = BirthDayDatePicker.DisplayDate;
             client.IDGender = (string)GenderComboBox.SelectedItem;
             if(isPhotoEdit)
